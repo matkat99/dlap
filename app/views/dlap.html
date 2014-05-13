@@ -1,0 +1,10 @@
+<p>Course Manifest</p>
+<select ng-model = 'domain' ng-options="d.name for d in domains"></select>
+<select ng-model = 'course' ng-options="c.title for c in courses"></select>
+
+<ul>
+<li ng-repeat="domain in domains">{{domain.id}} - {{domain.name}} - {{domain.parentid}}</li></ul>
+{{courseManifest}}
+<button ng-click="fetch()">fetch</button><br>
+
+        
