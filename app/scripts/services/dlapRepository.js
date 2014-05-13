@@ -38,7 +38,8 @@ angular.module('dlapApp')
         
       },
       getCourseList: function(domain) {
-        return Dlap.jsonp({cmd: 'listcourses', domainid: domain.id});
+        $('#select2-drop, #s2id_courseSelect').css({'width': '600px'});
+        return Dlap.jsonp({cmd: 'listcourses', domainid: domain.id, limit: 0, text: 'S14'});
       },
 
       getItemList: function(course) {
@@ -47,7 +48,9 @@ angular.module('dlapApp')
       getCourseManifest: function(course) {
         return Dlap.jsonp({cmd: 'getmanifest', entityid: course.id});
       },
-      
+      searchCourse: function(query, entityid, start){
+        return Dlap.jsonp({cmd: 'search', entityid: entityid.id, query: query, rows: 25, start: start});
+      },
       save: function(project) {
         if (project.id) {
           return Projects.put(term.id, project);

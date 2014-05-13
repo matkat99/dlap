@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('dlapApp', ['ui.router', 'ngRoute'])
+angular.module('dlapApp', ['ui.router', 'ngRoute', 'ui.select2'])
   /*.config(function ($routeProvider) {
     $routeProvider
       .when('/', {
