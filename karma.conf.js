@@ -13,9 +13,13 @@ module.exports = function(config) {
     files: [
       'app/bower_components/angular/angular.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
+      "app/bower_components/angular-route/angular-route.js",
+      "app/bower_components/angular-ui-router/release/angular-ui-router.js",
+      "app/bower_components/lodash/dist/lodash.min.js",
+
       'app/scripts/*.js',
       'app/scripts/**/*.js',
-      'test/mock/**/*.js',
+      //'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],
 
@@ -29,9 +33,12 @@ module.exports = function(config) {
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-
+    plugins : [
+            'karma-chrome-launcher',
+             'karma-jasmine'
+            ],
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // Start these browsers, currently available:
