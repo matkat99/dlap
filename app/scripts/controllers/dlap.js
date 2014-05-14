@@ -9,8 +9,7 @@ angular.module('dlapApp')
         $scope.courseItems = [];
         $scope.courseManifest = {};
         $scope.courseid;
-        $scope.pred = "Test";
-        $scope.revers = false;
+        $scope.audit = {};
         $scope.method = 'jsonp';
        
 
@@ -50,7 +49,22 @@ angular.module('dlapApp')
         if (newVal != oldval) {
             //getCourseManifest(newVal);
             getCourseItems(newVal);
+            dlapRepository.getItemList(newVal).then(function(data){
+              $scope.courseItems = data.response.items.item;
+            });
             $scope.courseid = newVal;
+            var len = $scope.courseItems.length;
+            var type = {};
+            for (var i = 0; i < len; i++){
+              var item = $scope.courseItems[i];
+              if (typeof type[item.data.type.$value] != 'undefined'){
+                type[item.data.type.$value]++;
+              }
+              else{
+                type[item.data.type.$value] = 0;
+              }
+            }
+            $scope.audit['type'] = type;
         }
     });
 

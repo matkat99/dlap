@@ -5,25 +5,7 @@
 <ul>
 <li ng-repeat="domain in domains">{{domain.id}} - {{domain.name}} - {{domain.parentid}}</li></ul>
 <button ng-click="fetch()">fetch</button><button ng-click="query('href=')">HyperLinks</button><br>
-
-<table style='position: absolute;top: 300px;left: 30px;'>
-	<tr>
-		<th><a href='' ng-click='pred = "data.title.$value"; reverse=!reverse'>Item Title</a></th>
-		<th><a href='' ng-click='pred = "data.type.$value"; reverse=!reverse'>Item Type</a></th>
-		<th><a href='' ng-click='pred = "data.parent.$value"; reverse=!reverse'>Item Parent</a></th>
-		<th><a href='' ng-click='pred = "data.duedate.$value"; reverse=!reverse'>Item Due Date</a></th>
-		<th><a href='' ng-click='pred = "data.duedategrace.$value"; reverse=!reverse'>Item Grace Period</a></th>
-		<th><a href='' ng-click='pred = "modifieddate"; reverse=!reverse'>Item Modificate Date</a></th>
-	</tr>
-	<tr ng-repeat='ci in courseItems | orderBy:pred:reverse'>
-		<td>{{ci.data.title.$value}}</td>
-		<td>{{ci.data.type.$value}}</td>
-		<td>{{ci.data.parent.$value}}</td>
-		<td>{{ci.data.duedate.$value}}</td>
-		<td ng-if='ci.data.duedategrace.$value != -1'>{{ci.data.duedategrace.$value}}</td>
-		<td>{{ci.modifieddate}}</td>
-	</tr>
-</table>
+<div ng-repeat='item in audit.type'>{{item}}</div>
 
 
         
