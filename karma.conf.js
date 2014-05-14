@@ -16,7 +16,8 @@ module.exports = function(config) {
       "app/bower_components/angular-route/angular-route.js",
       "app/bower_components/angular-ui-router/release/angular-ui-router.js",
       "app/bower_components/lodash/dist/lodash.min.js",
-
+      
+       "app/bower_components/angular-ui-select2/src/select2.js",
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       //'test/mock/**/*.js',

@@ -21,31 +21,24 @@ angular.module('dlapApp')
         params.unshift('');
       }
     }
-
-    function addJsonParams(params) {
-      params.format = 'JSON';
-        params.callback = "JSON_CALLBACK";
-        return params;
-    }
-
+    
     function doHttp(params) {
       if (_.isEmpty(params.config)) {
         params.config = {};
       }
 
-
       if (!_.isEmpty(params.requestParams)) {
         params.config.params = params.requestParams;
       }
 
-      if (params.route) {
-        params.route = "/" + params.route ;
+      if (!_.isUndefined(params.route) && !_.isEmpty(params.route.toString())) {
+        params.route = "/" + params.route;
       }
 
       if (!_.isEmpty(params.data)) {
         params.config.data = params.data;
       }
-     
+
       params.config.url = baseUrl + params.resourceUrl + params.route;
       params.config.method = params.action;
       return $http(params.config);
@@ -55,7 +48,6 @@ angular.module('dlapApp')
       return function() {
         var argumentsArray = _.toArray(arguments);
         addRouteIfMissing(argumentsArray);
-        argumentsArray[1] = addJsonParams(argumentsArray[1]);
         var argumentNames = hasData ? ['route', 'data', 'requestParams', 'config'] : ['route', 'requestParams', 'config'];
         var params = _.object(argumentNames, argumentsArray);
         params.action = action;
@@ -98,4 +90,3 @@ angular.module('dlapApp')
 
 
   }]);
-

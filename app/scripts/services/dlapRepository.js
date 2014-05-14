@@ -3,8 +3,13 @@
 angular.module('dlapApp')
 .factory('dlapRepository', ['dataResource', '$q', function(dataResource, $q) {
     var Dlap = dataResource.newResource('Admin.ashx');
-    
-
+    var params = {};
+    function resetParams() {
+      params = {};
+      params.format = 'JSON';
+        params.callback = "JSON_CALLBACK";
+        //return params;
+    }
 
     var cache;
 
@@ -31,25 +36,48 @@ angular.module('dlapApp')
     return {
       Dlap: Dlap,
       getDomains: function() {
-        return Dlap.jsonp({cmd: 'listdomains', domainid: 0, query: '/id in (1428365,15601242,17414961,10869190,1678022,1912820,2474683,2522027)' }); 
+        resetParams();
+        params.cmd = 'listdomains';
+        params.domainid = 0;
+        params.query = '/id in (1428365,15601242,17414961,10869190,1678022,1912820,2474683,2522027)';
+        return Dlap.jsonp(params); 
       },
       getUser: function() {
-        return Dlap.jsonp({cmd: 'getuser'});
+        resetParams();
+        params.cmd = 'getuser';
+        return Dlap.jsonp(params);
         
       },
       getCourseList: function(domain) {
         $('#select2-drop, #s2id_courseSelect').css({'width': '600px'});
-        return Dlap.jsonp({cmd: 'listcourses', domainid: domain.id, limit: 0, text: 'S14'});
+        resetParams();
+        params.cmd = 'listcourses';
+        params.domainid = domain.id;
+        params.limit = 0;
+        params.text = 'S14';
+        return Dlap.jsonp(params);
       },
 
       getItemList: function(course) {
-        return Dlap.jsonp({cmd: 'getitemlist', entityid: course.id});
+        resetParams();
+        params.cmd = 'getitemlist';
+        params.entityid = course.id;
+        return Dlap.jsonp(params);
       },
       getCourseManifest: function(course) {
-        return Dlap.jsonp({cmd: 'getmanifest', entityid: course.id});
+        resetParams();
+        params.cmd = 'getmanifest';
+        params.entityid = course.id;
+        return Dlap.jsonp(params);
       },
       searchCourse: function(query, entityid, start){
-        return Dlap.jsonp({cmd: 'search', entityid: entityid.id, query: query, rows: 25, start: start});
+        resetParams();
+        params.cmd = 'search';
+        params.entityid = entityid;
+        params.query = query;
+        params.rows = 25;
+        params.start = start;
+        return Dlap.jsonp(params);
       },
       save: function(project) {
         if (project.id) {
