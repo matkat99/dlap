@@ -4,8 +4,11 @@
 
 <ul>
 <li ng-repeat="domain in domains">{{domain.id}} - {{domain.name}} - {{domain.parentid}}</li></ul>
-<button ng-click="fetch()">fetch</button><button ng-click="query('href=')">HyperLinks</button><br>
+<button ng-click="fetch()">fetch</button><button ng-click="query('http')">HyperLinks</button><br>
 <div ng-repeat='item in audit.type'>{{item}}</div>
+{{valid}}<br>
+{{invalid}}<br>
+{{urls}}
 
 
         

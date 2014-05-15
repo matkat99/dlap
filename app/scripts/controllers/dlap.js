@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dlapApp')
-  .controller('DlapCtrl', function ($scope, dlapRepository, $stateParams) {
+  .controller('DlapCtrl', function ($scope, dlapRepository, $stateParams, $http) {
         $scope.domain = {};
         $scope.domains = [];
         $scope.course = {};
@@ -11,7 +11,9 @@ angular.module('dlapApp')
         $scope.courseid;
         $scope.audit = {};
         $scope.method = 'jsonp';
-       
+        $scope.urls = null;
+        $scope.valid = [];
+        $scope.invalid = [];       
 
       //dlapRepository.getUser().then(function(data){
       //  $scope.dlap = data;
@@ -44,6 +46,37 @@ angular.module('dlapApp')
         
       }
     });
+      $scope.getUrls = function(text) {
+        var source = (text || '').toString();
+        var urlArray = [];
+        var url;
+        var matchArray;
+
+        // Regular expression to find FTP, HTTP(S) and email URLs.
+        var regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)/g;
+
+        // Iterate through any URLs in the text.
+        while( (matchArray = regexToken.exec( source )) !== null )
+        {
+            var token = matchArray[0];
+            urlArray.push( token );
+        }
+
+        return urlArray;
+
+      }
+
+      $scope.checkUrl = function(url){
+          $http({method: 'HEAD', url: url})
+        .success(function(data, status) {
+            $scope.status = status;
+            $scope.valid.push(url);
+        })
+        .error(function(data, status) {
+            $scope.invalid.push({ url: url, status: data });
+            $scope.status = status;
+        });
+      }
 
     $scope.$watch('course', function(newVal, oldval) {
         if (newVal != oldval) {
@@ -52,7 +85,7 @@ angular.module('dlapApp')
             dlapRepository.getItemList(newVal).then(function(data){
               $scope.courseItems = data.response.items.item;
             });
-            $scope.courseid = newVal;
+            $scope.courseid = newVal.id;
             var len = $scope.courseItems.length;
             var type = {};
             for (var i = 0; i < len; i++){
@@ -68,9 +101,15 @@ angular.module('dlapApp')
         }
     });
 
+
     $scope.query = function(query){
       dlapRepository.searchCourse(query, $scope.courseid, 0).then(function(data) {
           var n = 0;
+          $scope.urls = $scope.getUrls(data.response.results.$xml);
+          
+          angular.forEach($scope.urls, function(value, key){
+              $scope.checkUrl(value);
+          });
       })
     }
 
